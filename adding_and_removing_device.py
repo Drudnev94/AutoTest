@@ -69,10 +69,13 @@ def test_google_serch():
 if __name__ == "__main__":
     test_google_serch()
     print("Домен успешно добавлен и переведен в статус Временно заблокирован")
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 3c229582b23b705cf6e4bc152e8ee86aee094dbd
 
 
 
