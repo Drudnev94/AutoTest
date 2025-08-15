@@ -48,25 +48,31 @@ def  add_domain(page):
                     print("Сделан скриншот error3.png")
                 except TimeoutError:
                     print("Добовления домена прошло успешно")
-                    return True
 
+#Функция создания подпсики:
 def add_subcrabhion(page):
     page.goto("http://web.rudnev-sms.casteam.casdev/dictionaries/services")
     page.wait_for_timeout(1500)
     page.locator('button', has_text="Добавить услугу").click()
 
+# Блок заполнения данных подписки в экране создания подписики:
+    # Выбор типа услуги:
     combobox = page.locator('div.combobox-select__single-value', has_text="Обычный")
     combobox.click()
-
     page.locator('div[role="option"]', has_text='Управление сервисами STB').click()
+    #Заполнение кода услуги
     page.locator('input[name="id"]').fill("TEST-end-to-end")
+    #Заполнение имя(RU) услуги:
     page.locator('input[name="service_name"]').fill("TEST-end-to-end")
+    #Выбор временого режима:
     page.locator('[data-part="item-text"]:has-text("Ограниченный")').click()
+    #Выбор сервисов STB:
     combobox1= page.locator('div.combobox-select__value-container',has_text="Выберите")
     combobox1.click()
     page.locator('#react-select-5-option-1').click()
     page.locator('#react-select-5-option-2').click()
     page.locator('#react-select-5-option-3').click()
+    #Добавление:
     page.locator('button', has_text="Добавить").click()
 
 
