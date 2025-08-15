@@ -1,21 +1,25 @@
 
 from playwright.sync_api import sync_playwright
 from playwright.sync_api import TimeoutError
-
-# Авторизация
-def  main():
-    # Создания браузера
+#Создаем контекст
+def main():
     with sync_playwright() as playwright:
         browser = playwright.chromium.launch(headless=False)
         page = browser.new_page()
+        if add_domain(page):
+            add_subcrabhion(page)
+        browser.close()
+
+
+# Авторизация
+def  add_domain(page):
         page.goto('http://web.rudnev-sms.casteam.casdev/login')
-     #Авторизация
         page.locator('input[name="login"]').fill("root")
         page.locator('input[name="password"]').fill("qaz123edc")
         page.keyboard.press("Enter")
     # Добавление устройства
         page.locator('button', has_text="Добавить устройство").click()
-        page.locator('input[name="deviceId"]').fill("10000000000091")
+        page.locator('input[name="deviceId"]').fill("18027000111222")
         page.locator('button', has_text="Добавить").click()
      # Ждем появления модального окна
         page.wait_for_selector('div[role=dialog]')
@@ -44,12 +48,28 @@ def  main():
                     print("Сделан скриншот error3.png")
                 except TimeoutError:
                     print("Добовления домена прошло успешно")
+                    return True
+
+def add_subcrabhion(page):
+    page.goto("http://web.rudnev-sms.casteam.casdev/dictionaries/services")
+    page.wait_for_timeout(1500)
+    page.locator('button', has_text="Добавить услугу").click()
+
+    combobox = page.locator('div.combobox-select__single-value', has_text="Обычный")
+    combobox.click()
+
+    page.locator('div[role="option"]', has_text='Управление сервисами STB').click()
+    page.locator('input[name="id"]').fill("TEST-end-to-end")
+    page.locator('input[name="service_name"]').fill("TEST-end-to-end")
+    page.locator('[data-part="item-text"]:has-text("Ограниченный")').click()
+    combobox1= page.locator('div.combobox-select__value-container',has_text="Выберите")
+    combobox1.click()
+    page.locator('#react-select-5-option-1').click()
+    page.locator('#react-select-5-option-2').click()
+    page.locator('#react-select-5-option-3').click()
+    page.locator('button', has_text="Добавить").click()
+
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
 
